@@ -29,3 +29,5 @@ Your site URL will be:
 If your repository is named `<your-github-username>.github.io`, the site will be served from the root:
 
 `https://<your-github-username>.github.io/`
+
+## References
