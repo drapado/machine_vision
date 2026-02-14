@@ -31,3 +31,6 @@ If your repository is named `<your-github-username>.github.io`, the site will be
 `https://<your-github-username>.github.io/`
 
 ## References
+This work is based on or inspired by the work and code of:
+
+* https://ciechanow.ski/cameras-and-lenses/
