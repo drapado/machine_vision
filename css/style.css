@@ -1,0 +1,453 @@
+/* Base styles */
+:root {
+    --text-color: #333;
+    --bg-color: #f9f9f9;
+    --accent-color: #2182C7;
+    --red-color: #FF593F;
+    --green-color: #55C432;
+    --yellow-color: #E8A938;
+    --blue-color: #2182C7;
+    --gray-color: #666;
+    --light-gray: #e0e0e0;
+    --border-radius: 4px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+body {
+    font-family: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    line-height: 1.3;
+    margin-top: 2em;
+    margin-bottom: 0.5em;
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-top: 1em;
+}
+
+h2 {
+    font-size: 1.75rem;
+    border-bottom: 1px solid var(--light-gray);
+    padding-bottom: 0.3em;
+}
+
+p {
+    margin: 1em 0;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Demo containers */
+.demo_container {
+    /* Allow demos to use more width for proper aspect ratio */
+    width: 100vw;
+    max-width: 800px;
+    margin: 2em auto;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 400px; /* Fixed height for demos */
+    overflow: visible;
+}
+
+/* Canvas container - created by JS, needs explicit dimensions */
+.canvas_container {
+    width: 100%;
+    height: 100%;
+    background: #f5f5f5;
+    border-radius: var(--border-radius);
+    overflow: visible;
+    position: relative;
+}
+
+.canvas_container canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Drag div for interactive demos */
+.drag_div {
+    position: absolute;
+    cursor: grab;
+    z-index: 5;
+}
+
+.drag_div:active {
+    cursor: grabbing;
+}
+
+/* Play/pause button for animated demos */
+.play_pause_button {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    z-index: 10;
+    transition: background 0.2s ease;
+}
+
+.play_pause_button:hover {
+    background: white;
+}
+
+/* Play icon (triangle) */
+.play_pause_button::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px 0 6px 10px;
+    border-color: transparent transparent transparent #333;
+    margin-left: 2px;
+}
+
+/* Pause icon (two bars) when playing */
+.play_pause_button.playing::before {
+    content: '';
+    width: 10px;
+    height: 12px;
+    border: none;
+    border-left: 3px solid #333;
+    border-right: 3px solid #333;
+    margin-left: 0;
+}
+
+/* Slider styles */
+
+.slider_field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 4px;
+}
+
+.slider_container {
+    width: 100%;
+    height: 32px;
+    position: relative;
+    cursor: pointer;
+    margin: 0;
+}
+
+
+.slider_left_gutter {
+    position: absolute;
+    height: 8px;
+    top: 12px;
+    background: linear-gradient(90deg, var(--accent-color), #3d9be0);
+    border-radius: 999px 0 0 999px;
+    cursor: pointer;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+
+.slider_right_gutter {
+    position: absolute;
+    height: 8px;
+    top: 12px;
+    background: #e6e6e6;
+    border-radius: 0 999px 999px 0;
+    cursor: pointer;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.08);
+}
+
+
+.slider_knob {
+    width: 22px;
+    height: 22px;
+    background: white;
+    border: 2px solid var(--accent-color);
+    border-radius: 50%;
+    position: absolute;
+    top: 5px;
+    left: -11px;
+    cursor: grab;
+    transition: transform 0.1s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.slider_knob:hover {
+    transform: scale(1.08);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.slider_knob:active {
+    cursor: grabbing;
+    transform: scale(1.02);
+}
+
+/* Red slider variant */
+.red_slider_left_gutter {
+    background: var(--red-color);
+}
+
+.red_slider_knob {
+    border-color: var(--red-color);
+}
+
+/* Gray slider variant */
+.gray_slider_left_gutter {
+    background: var(--gray-color);
+}
+
+.gray_slider_knob {
+    border-color: var(--gray-color);
+}
+
+/* Green slider variant */
+.green_slider_left_gutter {
+    background: var(--green-color);
+}
+
+.green_slider_knob {
+    border-color: var(--green-color);
+}
+
+/* Yellow slider variant */
+.yellow_slider_left_gutter {
+    background: var(--yellow-color);
+}
+
+.yellow_slider_knob {
+    border-color: var(--yellow-color);
+}
+
+/* Segmented control */
+.segmented_control_container {
+    display: flex;
+    background: var(--light-gray);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    margin: 10px 0;
+}
+
+.segmented_control_on,
+.segmented_control_off {
+    flex: 1;
+    padding: 8px 12px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.segmented_control_on {
+    background: var(--accent-color);
+    color: white;
+}
+
+.segmented_control_off {
+    background: transparent;
+    color: var(--text-color);
+}
+
+.segmented_control_off:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+/* Non-selectable text */
+.non_selectable {
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Animation controls */
+.animation_controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 1em 0;
+    padding: 10px;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: var(--border-radius);
+}
+
+.animation_controls button {
+    padding: 8px 16px;
+    border: none;
+    background: var(--accent-color);
+    color: white;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.animation_controls button:hover {
+    background: #1a6ca0;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Table styles */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+th, td {
+    padding: 10px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--light-gray);
+}
+
+th {
+    font-weight: 600;
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* Code/math display */
+.equation {
+    text-align: center;
+    margin: 1.5em 0;
+    font-style: italic;
+}
+
+.equation var {
+    font-style: italic;
+}
+
+/* Lists */
+ul, ol {
+    padding-left: 1.5em;
+    margin: 1em 0;
+}
+
+li {
+    margin: 0.5em 0;
+}
+
+/* Footer */
+footer {
+    margin-top: 4em;
+    padding: 2em 0;
+    border-top: 1px solid var(--light-gray);
+    text-align: center;
+    color: var(--gray-color);
+    font-size: 0.9rem;
+}
+
+footer a {
+    color: var(--gray-color);
+}
+
+footer a:hover {
+    color: var(--accent-color);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+    
+    .container {
+        padding: 15px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .demo_container {
+        /* On smaller screens, scale height proportionally to width */
+        height: 50vw;
+        max-height: 400px;
+    }
+    
+    .slider_group {
+        padding: 0 15px;
+    }
+}
+
+/* Article header */
+.article_header {
+    text-align: center;
+    margin-bottom: 3em;
+}
+
+.article_date {
+    color: var(--gray-color);
+    font-size: 0.9rem;
+}
+
+/* Blockquote */
+blockquote {
+    margin: 1.5em 0;
+    padding: 0.5em 1.5em;
+    border-left: 4px solid var(--accent-color);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+/* Demo with multiple sliders */
+.slider_group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 16px auto 32px auto;
+    width: 100vw;
+    max-width: 800px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.slider_field + .slider_field {
+    margin-top: 2px;
+}
+
+.slider_label {
+    font-size: 0.8rem;
+    color: var(--gray-color);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+}

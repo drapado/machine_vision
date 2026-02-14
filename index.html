@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cameras and Lenses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="article_header">
+            <p class="article_date">Interactive Exploration</p>
+            <h1>Cameras and Lenses</h1>
+        </header>
+
+        <h2>1. Recording Light with Sensors</h2>
+
+        <p>
+            The image sensor of a digital camera consists of a grid of photodetectors. A photodetector
+            converts photons into electric current that can be measured – the more photons
+            hitting the detector the higher the signal.
+        </p>
+
+        <p>
+            In the demonstration below you can observe how photons fall onto the arrangement
+            of detectors represented by small squares. The slider controls the flow of time:
+        </p>
+
+        <!-- Detector Demo -->
+        <p><strong>Figure 1</strong> - Photon detection over time</p>
+        <div class="demo_container" id="lens_detector"></div>
+        <div class="slider_group">
+            <div id="lens_detector_sl0"></div>
+        </div>
+
+        <p>
+            The longer the time of collection of photons the more of them are hitting the
+            detectors and the brighter the resulting pixels in the image. When we don't gather
+            enough photons the image is <em>underexposed</em>, but if we allow the photon collection 
+            to run for too long the image will be <em>overexposed</em>.
+        </p>
+
+        <p>
+            While the photons have the "color" of their wavelength, the photodetectors don't see 
+            that hue – they only measure the total intensity which results in a black and white image. 
+            To record the color information we need to separate the incoming photons into distinct groups. 
+            We can put tiny color filters on top of the detectors so that they will only accept, more or less, 
+            red, green, or blue light:
+        </p>
+
+        <!-- Bayer Filter Demo -->
+        <p><strong>Figure 2</strong> - Bayer filter pattern</p>
+        <div class="demo_container" id="lens_bayer"></div>
+
+        <!-- RGBG Detector Demo -->
+        <p><strong>Figure 3</strong> - RGBG detector array</p>
+        <div class="demo_container" id="lens_detector_rgbg"></div>
+        <div class="slider_group">
+            <div id="lens_detector_rgbg_sl0"></div>
+        </div>
+
+        <!-- RGB Detector Demo -->
+        <p><strong>Figure 4</strong> - RGB detector demonstration</p>
+        <div class="demo_container" id="lens_detector_rgb"></div>
+        <div class="slider_group">
+            <div id="lens_detector_rgb_sl0"></div>
+        </div>
+
+        <!-- RGB Filter Demo -->
+        <p><strong>Figure 5</strong> - RGB color filter effects</p>
+        <div class="demo_container" id="lens_rgb_filter"></div>
+        <div class="slider_group">
+            <div id="lens_rgb_filter_sl0"></div>
+        </div>
+
+        <h2>2. Rays and Light on a Scene and Sensor</h2>
+
+        <p>
+            The examples we've discussed so far were very convenient – we were surrounded by
+            complete darkness with the photons neatly hitting the pixels to form a coherent
+            image. Let's see how the sensor performs in more realistic scenarios.
+        </p>
+
+        <!-- Scene Demo -->
+        <p><strong>Figure 6</strong> - Scene setup</p>
+        <div class="demo_container" id="lens_scene"></div>
+
+        <p>
+            Let's try to see what sort of picture would be taken by a sensor that is placed
+            near the objects without any enclosure:
+        </p>
+
+        <!-- Bare Film Demo -->
+        <p><strong>Figure 7</strong> - Bare sensor without enclosure</p>
+        <div class="demo_container" id="lens_bare_film"></div>
+
+        <p>
+            This is not a mistake. As you can see, the obtained image doesn't really
+            resemble anything. Every pixel of the sensor is exposed to the entire environment.
+        </p>
+
+        <!-- Sensor Rays Demo -->
+        <p><strong>Figure 8</strong> - Light rays hitting sensor</p>
+        <div class="demo_container" id="lens_sensor_rays"></div>
+
+        <!-- Scene Rays Demo -->
+        <p><strong>Figure 9</strong> - Light rays from scene</p>
+        <div class="demo_container" id="lens_scene_rays"></div>
+
+        <h2>3. Pinhole Camera</h2>
+
+        <p>
+            Let's put the sensor in a box that has a small hole in it. The first slider 
+            controls the diameter of the hole, while the second one controls the distance 
+            between the opening and the sensor:
+        </p>
+
+        <!-- Box Demo -->
+        <p><strong>Figure 10</strong> - Pinhole camera box</p>
+        <div class="demo_container" id="lens_box"></div>
+        <div class="slider_group">
+            <div id="lens_box_sl0"></div>
+            <div id="lens_box_sl1"></div>
+        </div>
+
+        <p>
+            We've just built a <em>pinhole camera</em>! The image is inverted – the rays cross over 
+            in the hole and the formed image is a horizontal and a vertical reflection of the actual scene.
+        </p>
+
+        <!-- Film Demo -->
+        <p><strong>Figure 11</strong> - Pinhole camera image formation</p>
+        <div class="demo_container" id="lens_film"></div>
+        <div class="slider_group">
+            <div id="lens_film_sl0"></div>
+            <div id="lens_film_sl1"></div>
+        </div>
+
+        <!-- Film Invert Demo -->
+        <p><strong>Figure 12</strong> - Inverted image demonstration</p>
+        <div class="demo_container" id="lens_film_invert"></div>
+
+        <!-- Frustum Demo -->
+        <p><strong>Figure 13</strong> - Camera frustum visualization</p>
+        <div class="demo_container" id="lens_frustum"></div>
+        <div class="slider_group">
+            <div id="lens_frustum_sl0"></div>
+        </div>
+
+        <!-- Field Demo -->
+        <p><strong>Figure 14</strong> - Field of view</p>
+        <div class="demo_container" id="lens_field"></div>
+        <div class="slider_group">
+            <div id="lens_field_sl0"></div>
+        </div>
+
+        <!-- Hole Solid Angle Demo -->
+        <p><strong>Figure 15</strong> - Solid angle of pinhole</p>
+        <div class="demo_container" id="lens_hole_solid_angle"></div>
+        <div class="slider_group">
+            <div id="lens_hole_solid_angle_sl0"></div>
+        </div>
+
+        <p>
+            When the hole gets smaller the image gets sharper:
+        </p>
+
+        <!-- Hole Sharpness Demo -->
+        <p><strong>Figure 16</strong> - Pinhole size vs sharpness</p>
+        <div class="demo_container" id="lens_hole_sharpness"></div>
+        <div class="slider_group">
+            <div id="lens_hole_sharpness_sl0"></div>
+        </div>
+
+        <!-- Film Exposure Demo -->
+        <p><strong>Figure 17</strong> - Exposure time effects</p>
+        <div class="demo_container" id="lens_film_exposure"></div>
+        <div class="slider_group">
+            <div id="lens_film_exposure_sl0"></div>
+            <div id="lens_film_exposure_sl1"></div>
+        </div>
+
+        <h2>4. Thin Lens Model</h2>
+
+        <p>
+            When we shape the glass to have different angles between its walls at different heights, 
+            we can control the direction of rays:
+        </p>
+
+        <!-- Subdiv Demo -->
+        <p><strong>Figure 18</strong> - Lens surface subdivision</p>
+        <div class="demo_container" id="lens_subdiv"></div>
+        <div class="slider_group">
+            <div id="lens_subdiv_seg0"></div>
+        </div>
+
+        <!-- Rotational Demo -->
+        <p><strong>Figure 19</strong> - Rotational lens geometry</p>
+        <div class="demo_container" id="lens_rotational"></div>
+
+        <!-- Rotational Focal Demo -->
+        <p><strong>Figure 20</strong> - Focal point convergence</p>
+        <div class="demo_container" id="lens_rotational_focal"></div>
+        <div class="slider_group">
+            <div id="lens_rotational_focal_sl0"></div>
+        </div>
+
+        <!-- Lens Shape Demo -->
+        <p><strong>Figure 21</strong> - Adjustable lens shape</p>
+        <div class="demo_container" id="lens_lens_shape"></div>
+        <div class="slider_group">
+            <div id="lens_lens_shape_sl0"></div>
+            <div id="lens_lens_shape_sl1"></div>
+        </div>
+
+        <h3>4.1 Focus and Bokeh</h3>
+
+        <!-- Field2 Demo -->
+        <p><strong>Figure 22</strong> - Field of view variation</p>
+        <div class="demo_container" id="lens_field2"></div>
+        <div class="slider_group">
+            <div id="lens_field2_sl0"></div>
+            <div id="lens_field2_sl1"></div>
+        </div>
+
+        <!-- Lens Solid Angle Demo -->
+        <p><strong>Figure 23</strong> - Lens solid angle comparison</p>
+        <div class="demo_container" id="lens_lens_solid_angle"></div>
+        <div class="slider_group">
+            <div id="lens_lens_solid_angle_sl0"></div>
+            <div id="lens_lens_solid_angle_sl1"></div>
+        </div>
+
+        <!-- Focus Demo 2 -->
+        <p><strong>Figure 24</strong> - Focus adjustment with lens</p>
+        <div class="demo_container" id="lens_focus_demo2"></div>
+        <div class="slider_group">
+            <div id="lens_focus_demo2_sl0"></div>
+        </div>
+
+        <!-- Focus Demo 3 -->
+        <p><strong>Figure 25</strong> - Focus distance demonstration</p>
+        <div class="demo_container" id="lens_focus_demo3"></div>
+        <div class="slider_group">
+            <div id="lens_focus_demo3_sl0"></div>
+            <div id="lens_focus_demo3_sl1"></div>
+        </div>
+
+        <!-- Cone Slice Demo -->
+        <p><strong>Figure 26</strong> - Cone slicing at different distances</p>
+        <div class="demo_container" id="lens_cone_slice"></div>
+        <div class="slider_group">
+            <div id="lens_cone_slice_sl0"></div>
+        </div>
+
+        <h3>4.2 Aperture</h3>
+
+        <!-- Cone Angle Demo -->
+        <p><strong>Figure 27</strong> - Light cone angle</p>
+        <div class="demo_container" id="lens_cone_angle"></div>
+        <div class="slider_group">
+            <div id="lens_cone_angle_sl0"></div>
+        </div>
+
+        <!-- Blades Demo -->
+        <p><strong>Figure 28</strong> - Aperture blade shapes</p>
+        <div class="demo_container" id="lens_blades"></div>
+        <div class="slider_group">
+            <div id="lens_blades_sl0"></div>
+        </div>
+
+        <p>
+            The shape of the aperture also defines the shape of bokeh. This is the reason
+            why bokeh sometimes has a polygonal shape – it's simply the shape of the "cone" of
+            light after passing through the blades of the aperture. Next time you watch a
+            movie pay close attention to the shape of out-of-focus highlights, they're
+            often polygonal:
+        </p>
+
+        <!-- Cone Hex Demo (Polygonal Bokeh) -->
+        <p><strong>Figure 29</strong> - Polygonal bokeh from aperture blades</p>
+        <div class="demo_container" id="lens_cone_hex"></div>
+        <div class="slider_group">
+            <div id="lens_cone_hex_sl0"></div>
+        </div>
+
+        <!-- Cone DOF Demo -->
+        <p><strong>Figure 30</strong> - Depth of field visualization</p>
+        <div class="demo_container" id="lens_cone_dof"></div>
+        <div class="slider_group">
+            <div id="lens_cone_dof_sl0"></div>
+            <div id="lens_cone_dof_sl1"></div>
+            <div id="lens_cone_dof_sl2"></div>
+        </div>
+
+        <h2>Try It Yourself</h2>
+
+        <p>
+            Now that you understand how sensors, pinholes, lenses, focus, and aperture work together,
+            try adjusting all three parameters in this interactive demonstration:
+        </p>
+
+        <!-- Hero Demo -->
+        <p><strong>Figure 31</strong> - Interactive lens demonstration</p>
+        <div class="demo_container" id="lens_hero"></div>
+        <div class="slider_group">
+            <div id="lens_hero_sl0"></div>
+            <div id="lens_hero_sl1"></div>
+            <div id="lens_hero_sl2"></div>
+        </div>
+
+        <footer>
+            <p>
+                Animations and ideas based on the original work by <a href="https://ciechanow.ski/cameras-and-lenses/">Bartosz Ciechanowski</a>
+            </p>
+        </footer>
+    </div>
+
+    <script src="js/base.js"></script>
+    <script src="js/lenses.js"></script>
+</body>
+</html>
