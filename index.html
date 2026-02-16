@@ -18,38 +18,19 @@
 
         <h2>1. Recording Light with Sensors</h2>
 
-        <p>
-            The image sensor of a digital camera consists of a grid of photodetectors. A photodetector
-            converts photons into electric current that can be measured – the more photons
-            hitting the detector the higher the signal.
-        </p>
+        <p>Digital image sensors consists of a grid of photodetectors that convert photons into electric current that can be measured. The more photons hitting the detector the higher the signal.</p>
 
-        <p>
-            In the demonstration below you can observe how photons fall onto the arrangement
-            of detectors represented by small squares. The slider controls the flow of time:
-        </p>
+        <p>In the demonstration below you can see how photons would fall onto the arrangement of photodetectors represented by small squares. The slider controls the flow of time.</p>
 
         <!-- Detector Demo -->
-        <p><strong>Figure 1</strong> - Photon detection over time</p>
         <div class="demo_container" id="lens_detector"></div>
         <div class="slider_group">
             <div id="lens_detector_sl0"></div>
         </div>
 
-        <p>
-            The longer the time of collection of photons the more of them are hitting the
-            detectors and the brighter the resulting pixels in the image. When we don't gather
-            enough photons the image is <em>underexposed</em>, but if we allow the photon collection 
-            to run for too long the image will be <em>overexposed</em>.
-        </p>
+        <p>As you can see, the longer the time of collection of photons the more of them are hitting the detectors and the brighter the resulting pixels in the image. When we don't gather enough photons the image is <em>underexposed</em>, but if we allow the photon collection to run for too long the image will be <em>overexposed</em>.</p>
 
-        <p>
-            While the photons have the "color" of their wavelength, the photodetectors don't see 
-            that hue – they only measure the total intensity which results in a black and white image. 
-            To record the color information we need to separate the incoming photons into distinct groups. 
-            We can put tiny color filters on top of the detectors so that they will only accept, more or less, 
-            red, green, or blue light:
-        </p>
+        <p>You can see how the resulting image is black and white, even though the photons have the "color" of their wavelength, the photodetectors don't see that hue – they only measure the total intensity which results in a black and white image. To record the color information we need to separate the incoming photons into distinct groups. We can put tiny color filters on top of the detectors so that they will only accept, more or less, red, green, or blue light:</p>
 
         <!-- Bayer Filter Demo -->
         <p><strong>Figure 2</strong> - Bayer filter pattern</p>
@@ -78,29 +59,19 @@
 
         <h2>2. Rays and Light on a Scene and Sensor</h2>
 
-        <p>
-            The examples we've discussed so far were very convenient – we were surrounded by
-            complete darkness with the photons neatly hitting the pixels to form a coherent
-            image. Let's see how the sensor performs in more realistic scenarios.
-        </p>
+        <p>The examples we've discussed so far were very convenient – we were surrounded by complete darkness with the photons neatly hitting the pixels to form a coherent image. Let's see how the sensor performs in more realistic scenarios.</p>
 
         <!-- Scene Demo -->
         <p><strong>Figure 6</strong> - Scene setup</p>
         <div class="demo_container" id="lens_scene"></div>
 
-        <p>
-            Let's try to see what sort of picture would be taken by a sensor that is placed
-            near the objects without any enclosure:
-        </p>
+        <p>Let's try to see what sort of picture would be taken by a sensor that is placed near the objects without any enclosure:</p>
 
         <!-- Bare Film Demo -->
         <p><strong>Figure 7</strong> - Bare sensor without enclosure</p>
         <div class="demo_container" id="lens_bare_film"></div>
 
-        <p>
-            This is not a mistake. As you can see, the obtained image doesn't really
-            resemble anything. Every pixel of the sensor is exposed to the entire environment.
-        </p>
+        <p>This is not a mistake. As you can see, the obtained image doesn't really resemble anything. Every pixel of the sensor is exposed to the entire environment.</p>
 
         <!-- Sensor Rays Demo -->
         <p><strong>Figure 8</strong> - Light rays hitting sensor</p>
@@ -112,11 +83,7 @@
 
         <h2>3. Pinhole Camera</h2>
 
-        <p>
-            Let's put the sensor in a box that has a small hole in it. The first slider 
-            controls the diameter of the hole, while the second one controls the distance 
-            between the opening and the sensor:
-        </p>
+        <p>Let's put the sensor in a box that has a small hole in it. The first slider controls the diameter of the hole, while the second one controls the distance between the opening and the sensor:</p>
 
         <!-- Box Demo -->
         <p><strong>Figure 10</strong> - Pinhole camera box</p>
@@ -126,10 +93,7 @@
             <div id="lens_box_sl1"></div>
         </div>
 
-        <p>
-            We've just built a <em>pinhole camera</em>! The image is inverted – the rays cross over 
-            in the hole and the formed image is a horizontal and a vertical reflection of the actual scene.
-        </p>
+        <p>We've just built a <em>pinhole camera</em>! The image is inverted – the rays cross over in the hole and the formed image is a horizontal and a vertical reflection of the actual scene.</p>
 
         <!-- Film Demo -->
         <p><strong>Figure 11</strong> - Pinhole camera image formation</p>
@@ -164,9 +128,7 @@
             <div id="lens_hole_solid_angle_sl0"></div>
         </div>
 
-        <p>
-            When the hole gets smaller the image gets sharper:
-        </p>
+        <p>When the hole gets smaller the image gets sharper:</p>
 
         <!-- Hole Sharpness Demo -->
         <p><strong>Figure 16</strong> - Pinhole size vs sharpness</p>
@@ -185,10 +147,7 @@
 
         <h2>4. Thin Lens Model</h2>
 
-        <p>
-            When we shape the glass to have different angles between its walls at different heights, 
-            we can control the direction of rays:
-        </p>
+        <p>When we shape the glass to have different angles between its walls at different heights, we can control the direction of rays:</p>
 
         <!-- Subdiv Demo -->
         <p><strong>Figure 18</strong> - Lens surface subdivision</p>
@@ -272,13 +231,7 @@
             <div id="lens_blades_sl0"></div>
         </div>
 
-        <p>
-            The shape of the aperture also defines the shape of bokeh. This is the reason
-            why bokeh sometimes has a polygonal shape – it's simply the shape of the "cone" of
-            light after passing through the blades of the aperture. Next time you watch a
-            movie pay close attention to the shape of out-of-focus highlights, they're
-            often polygonal:
-        </p>
+        <p>The shape of the aperture also defines the shape of bokeh. This is the reason why bokeh sometimes has a polygonal shape – it's simply the shape of the "cone" of light after passing through the blades of the aperture. Next time you watch a movie pay close attention to the shape of out-of-focus highlights, they're often polygonal:</p>
 
         <!-- Cone Hex Demo (Polygonal Bokeh) -->
         <p><strong>Figure 29</strong> - Polygonal bokeh from aperture blades</p>
@@ -298,10 +251,7 @@
 
         <h2>Try It Yourself</h2>
 
-        <p>
-            Now that you understand how sensors, pinholes, lenses, focus, and aperture work together,
-            try adjusting all three parameters in this interactive demonstration:
-        </p>
+        <p>Now that you understand how sensors, pinholes, lenses, focus, and aperture work together, try adjusting all three parameters in this interactive demonstration:</p>
 
         <!-- Hero Demo -->
         <p><strong>Figure 31</strong> - Interactive lens demonstration</p>
@@ -313,9 +263,7 @@
         </div>
 
         <footer>
-            <p>
-                Animations and ideas based on the original work by <a href="https://ciechanow.ski/cameras-and-lenses/">Bartosz Ciechanowski</a>
-            </p>
+            <p>Animations and ideas based on the original work by <a href="https://ciechanow.ski/cameras-and-lenses/">Bartosz Ciechanowski</a></p>
         </footer>
     </div>
 
