@@ -77,26 +77,25 @@
         <!-- Sensor Rays Demo -->
         <div class="demo_container" id="lens_sensor_rays"></div>
 
+        <p>Furthermore, every point in an object emits light in all directions. The sensor only receives a small fraction of that light, and the amount of light received by each pixel depends on the angle of incidence and the distance from the object:</p>
+
         <!-- Scene Rays Demo -->
-        <p><strong>Figure 9</strong> - Light rays from scene</p>
         <div class="demo_container" id="lens_scene_rays"></div>
 
         <h2>3. Pinhole Camera</h2>
 
-        <p>Let's put the sensor in a box that has a small hole in it. The first slider controls the diameter of the hole, while the second one controls the distance between the opening and the sensor:</p>
+        <p>We need to have a method to control the light hitting the sensor. Let's put the sensor in a box that has a small hole in it. The first slider controls the diameter of the hole, while the second one controls the distance between the opening and the sensor:</p>
 
         <!-- Box Demo -->
-        <p><strong>Figure 10</strong> - Pinhole camera box</p>
         <div class="demo_container" id="lens_box"></div>
         <div class="slider_group">
             <div id="lens_box_sl0"></div>
             <div id="lens_box_sl1"></div>
         </div>
 
-        <p>We've just built a <em>pinhole camera</em>! The image is inverted – the rays cross over in the hole and the formed image is a horizontal and a vertical reflection of the actual scene.</p>
+        <p>We've just built a <em>pinhole camera</em>! The image is inverted as the rays cross over in the hole and the formed image is a horizontal and a vertical reflection of the actual scene. This is illustrated in the following two figures.</p>
 
         <!-- Film Demo -->
-        <p><strong>Figure 11</strong> - Pinhole camera image formation</p>
         <div class="demo_container" id="lens_film"></div>
         <div class="slider_group">
             <div id="lens_film_sl0"></div>
@@ -104,22 +103,23 @@
         </div>
 
         <!-- Film Invert Demo -->
-        <p><strong>Figure 12</strong> - Inverted image demonstration</p>
         <div class="demo_container" id="lens_film_invert"></div>
 
+        <p> We define the frustum of a camera as the volume of space that is visible to the camera. The frustum is defined by the field of view, the near and far clipping planes, and the aspect ratio of the image (or sensor).</p>
+
         <!-- Frustum Demo -->
-        <p><strong>Figure 13</strong> - Camera frustum visualization</p>
         <div class="demo_container" id="lens_frustum"></div>
         <div class="slider_group">
             <div id="lens_frustum_sl0"></div>
         </div>
 
         <!-- Field Demo -->
-        <p><strong>Figure 14</strong> - Field of view</p>
         <div class="demo_container" id="lens_field"></div>
         <div class="slider_group">
             <div id="lens_field_sl0"></div>
         </div>
+
+        <p>In a pinhole camera, the sharpness of an image depends on the size of the hole. A smaller hole produces a sharper image but less light is able to pass through it.</p>
 
         <!-- Hole Solid Angle Demo -->
         <p><strong>Figure 15</strong> - Solid angle of pinhole</p>
@@ -128,17 +128,17 @@
             <div id="lens_hole_solid_angle_sl0"></div>
         </div>
 
-        <p>When the hole gets smaller the image gets sharper:</p>
+        <p>The following figure shows what happens at the sensor level when the hole size is changed:</p>
 
         <!-- Hole Sharpness Demo -->
-        <p><strong>Figure 16</strong> - Pinhole size vs sharpness</p>
         <div class="demo_container" id="lens_hole_sharpness"></div>
         <div class="slider_group">
             <div id="lens_hole_sharpness_sl0"></div>
         </div>
 
+        <p>Until now, we have used an ideal sensor that can capture as much light as needed. If we would use a less ideal sensor, it would be able to capture only a limited amount of light. As you can see, when the hole is too large the rays from a single point in the scene are able to hit multiple pixels on the sensor, which results in a blurry image. When the hole is too small, the rays from a single point are only able to hit a single pixel, which results in a sharper image but less light is able to reach the sensor, which results in a darker image. To increase the amount of light, we could have large exposure times. However, this will cause motion blur in dynamic scenes.</p>
+
         <!-- Film Exposure Demo -->
-        <p><strong>Figure 17</strong> - Exposure time effects</p>
         <div class="demo_container" id="lens_film_exposure"></div>
         <div class="slider_group">
             <div id="lens_film_exposure_sl0"></div>
@@ -147,28 +147,29 @@
 
         <h2>4. Thin Lens Model</h2>
 
-        <p>When we shape the glass to have different angles between its walls at different heights, we can control the direction of rays:</p>
+        <p>To solve the problems of the pinhole camera, we need a device that could solve both of these problems: a way to collect a bigger part of the light radiated by the objects and also control the sharpness of parts of the image. For the objects in the scene that must be sharp we want to collect as much of their light as possible, and make it converge to the smallest possible point. This device would look something like this:</p>
 
-        <!-- Subdiv Demo -->
-        <p><strong>Figure 18</strong> - Lens surface subdivision</p>
-        <div class="demo_container" id="lens_subdiv"></div>
-        <div class="slider_group">
-            <div id="lens_subdiv_seg0"></div>
-        </div>
+        <!-- Ideal Thin Lens Device Demo -->
+        <div class="demo_container" id="lens_device"></div>
+
+        <p>Then, if we place the sensor at this convergence point we will obtain a sharp image. The device that cameras use to achieve this is a lens. And the simplest lens that can achieve this is called a <em>thin lens</em>.</p>
+
+        <p>A thin lens is a piece of transparent material (e.g. glass) that has two spherical surfaces. It is an idealized lens, but it is commonly used to illustrate the principles of lens behavior. The following figure shows the geometry of a thin lens:</p>
 
         <!-- Rotational Demo -->
-        <p><strong>Figure 19</strong> - Rotational lens geometry</p>
         <div class="demo_container" id="lens_rotational"></div>
 
+        <p>The convergence point of the rays is referred to as the <em>focal point</em>. You can see in the folloing figure how the focal point changes when the position of the origin of rays moves:</p>
+
         <!-- Rotational Focal Demo -->
-        <p><strong>Figure 20</strong> - Focal point convergence</p>
         <div class="demo_container" id="lens_rotational_focal"></div>
         <div class="slider_group">
             <div id="lens_rotational_focal_sl0"></div>
         </div>
 
+        <p>The main characteristic of a lens is its <em>focal length</em>. The focal length is the distance from the center of the lens to the focal point when the rays are parallel to the optical axis. Two parameters control the focal length: the curvature of the lens surfaces and the refractive index of the lens material:</p>
+
         <!-- Lens Shape Demo -->
-        <p><strong>Figure 21</strong> - Adjustable lens shape</p>
         <div class="demo_container" id="lens_lens_shape"></div>
         <div class="slider_group">
             <div id="lens_lens_shape_sl0"></div>
@@ -177,8 +178,9 @@
 
         <h3>4.1 Focus and Bokeh</h3>
 
+        <p>When the sensor is placed at the focal point of the lens, the image is sharp. However, when the sensor is moved away from the focal point, the rays from a single point in the scene are no longer able to converge to a single point on the sensor, which results in a blurry image. The amount of blur depends on how far the sensor is from the focal point. The following figures shows how the field of view changes when we move the sensor to keep an image sharp at different focal lengths:</p>
+
         <!-- Field2 Demo -->
-        <p><strong>Figure 22</strong> - Field of view variation</p>
         <div class="demo_container" id="lens_field2"></div>
         <div class="slider_group">
             <div id="lens_field2_sl0"></div>
@@ -186,30 +188,23 @@
         </div>
 
         <!-- Lens Solid Angle Demo -->
-        <p><strong>Figure 23</strong> - Lens solid angle comparison</p>
         <div class="demo_container" id="lens_lens_solid_angle"></div>
         <div class="slider_group">
             <div id="lens_lens_solid_angle_sl0"></div>
             <div id="lens_lens_solid_angle_sl1"></div>
         </div>
 
+        <p>When the sensor is not placed at the focal point, the rays from a single point in the scene are able to hit multiple pixels on the sensor, which results in a blurry image. This blur is called <em>bokeh</em>. The following figure shows how bokeh changes when we move the sensor away from the focal point:</p>
+
         <!-- Focus Demo 2 -->
-        <p><strong>Figure 24</strong> - Focus adjustment with lens</p>
         <div class="demo_container" id="lens_focus_demo2"></div>
         <div class="slider_group">
             <div id="lens_focus_demo2_sl0"></div>
         </div>
 
-        <!-- Focus Demo 3 -->
-        <p><strong>Figure 25</strong> - Focus distance demonstration</p>
-        <div class="demo_container" id="lens_focus_demo3"></div>
-        <div class="slider_group">
-            <div id="lens_focus_demo3_sl0"></div>
-            <div id="lens_focus_demo3_sl1"></div>
-        </div>
+        <p>In the next figure, you can see how at a given focal length and sensor distance, an object might be more or less in focus depending on how far it is from the lens:</p>
 
         <!-- Cone Slice Demo -->
-        <p><strong>Figure 26</strong> - Cone slicing at different distances</p>
         <div class="demo_container" id="lens_cone_slice"></div>
         <div class="slider_group">
             <div id="lens_cone_slice_sl0"></div>
@@ -217,31 +212,44 @@
 
         <h3>4.2 Aperture</h3>
 
+        <p>In cameras, there is another parameter that plays an important role on how much light is captured and how much of the scene is in focus. This parameter is called the <em>aperture</em>. The aperture is the opening in the lens that allows light to pass through. The size of the aperture affects both the amount of light that enters the camera and the so-called <em>depth of field</em>. Let's start by visualizing how the angle of the light of rays (light cone) can increase or reduce sharpness:</p>
+
         <!-- Cone Angle Demo -->
-        <p><strong>Figure 27</strong> - Light cone angle</p>
         <div class="demo_container" id="lens_cone_angle"></div>
         <div class="slider_group">
             <div id="lens_cone_angle_sl0"></div>
         </div>
 
+        <p>The aperture is controlled by the diaphragm of the lens, which consists of a set of blades that can open and close to adjust the size of the aperture. The shape of the aperture is determined by the number and shape of the blades. The more blades there are, the more circular the aperture will be, which results in smoother bokeh. The shape of the aperture also defines the shape of bokeh. This is the reason why bokeh sometimes has a polygonal shape - it's simply the shape of the "cone" of light after passing through the blades of the aperture.</p>
+
         <!-- Blades Demo -->
-        <p><strong>Figure 28</strong> - Aperture blade shapes</p>
         <div class="demo_container" id="lens_blades"></div>
         <div class="slider_group">
             <div id="lens_blades_sl0"></div>
         </div>
 
-        <p>The shape of the aperture also defines the shape of bokeh. This is the reason why bokeh sometimes has a polygonal shape – it's simply the shape of the "cone" of light after passing through the blades of the aperture. Next time you watch a movie pay close attention to the shape of out-of-focus highlights, they're often polygonal:</p>
+        <p>The aperture has an effect on the light cone angle. A smaller aperture results in a smaller light cone angle, which increases the depth of field. A larger depth of field means that more parts of the scene are in focus. Conversely, a larger aperture results in a larger light cone angle, which decreases the depth of field.</p>
 
         <!-- Cone Hex Demo (Polygonal Bokeh) -->
-        <p><strong>Figure 29</strong> - Polygonal bokeh from aperture blades</p>
         <div class="demo_container" id="lens_cone_hex"></div>
         <div class="slider_group">
             <div id="lens_cone_hex_sl0"></div>
         </div>
 
+        <p>The following figure allows you to play with the aperture to increase and decrease depth of field, and the sensor distance, to adjust the focus point:</p>
+
+        <!-- Focus Demo 3 -->
+        <div class="demo_container" id="lens_focus_demo3"></div>
+        <div class="slider_group">
+            <div id="lens_focus_demo3_sl0"></div>
+            <div id="lens_focus_demo3_sl1"></div>
+        </div>
+
+        <p>Notice how when the we change the focus point on the image by adjusting the sensor distance, the field of view changes. This effect is often referred to as <em>focus breathing</em>.</p>
+
+        <p>The following figure allows you to see the effect of aperture and focal length in the depth of field, and to see how the rays of an object inside and outside the focus distance are affected:</p>
+    
         <!-- Cone DOF Demo -->
-        <p><strong>Figure 30</strong> - Depth of field visualization</p>
         <div class="demo_container" id="lens_cone_dof"></div>
         <div class="slider_group">
             <div id="lens_cone_dof_sl0"></div>
@@ -251,10 +259,9 @@
 
         <h2>Try It Yourself</h2>
 
-        <p>Now that you understand how sensors, pinholes, lenses, focus, and aperture work together, try adjusting all three parameters in this interactive demonstration:</p>
+        <p>Now that you understand how a digital camera with a lens and an aperture diaphragm work together, try adjusting all three parameters in this interactive demonstration:</p>
 
         <!-- Hero Demo -->
-        <p><strong>Figure 31</strong> - Interactive lens demonstration</p>
         <div class="demo_container" id="lens_hero"></div>
         <div class="slider_group">
             <div id="lens_hero_sl0"></div>
