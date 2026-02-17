@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cameras and Lenses</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header class="article_header">
+            <p class="article_date">17/02/2026</p>
+            <h1>Cameras and Lenses</h1>
+        </header>
+
+        <h2>1. Recording Light with Sensors</h2>
+
+        <p>Digital image sensors consists of a grid of photodetectors that convert photons into electric current that can be measured. The more photons hitting the detector the higher the signal.</p>
+
+        <p>In the demonstration below you can see how photons would fall onto the arrangement of photodetectors represented by small squares. The slider controls the flow of time.</p>
+
+        <!-- Detector Demo -->
+        <div class="demo_container" id="lens_detector"></div>
+        <div class="slider_group">
+            <div id="lens_detector_sl0"></div>
+        </div>
+
+        <p>As you can see, the longer the time of collection of photons the more of them are hitting the detectors and the brighter the resulting pixels in the image. When we don't gather enough photons the image is <em>underexposed</em>, but if we allow the photon collection to run for too long the image will be <em>overexposed</em>.</p>
+
+        <p>It might surprise you that the resulting image is black and white, even though the photons have the "color" of their wavelength, the photodetectors don't see that color. The photodetectors only measure the total intensity which results in a black and white image. To record the color information we need to separate the incoming photons into distinct groups. We can put tiny color filters on top of the detectors so that they will only accept, more or less, red, green, or blue light. The most common filter arrangement is the Bayer filter pattern:</p>
+
+        <!-- Bayer Filter Demo -->
+        <div class="demo_container" id="lens_bayer"></div>
+
+        <p>The Bayer filter pattern consists of a 2x2 grid of two green filters, one red filter, and one blue filter. There are other filter arrangements, like the X-Trans, but the Bayer pattern is the most common in digital cameras. The filters let only photons of a specific color through to the detector underneath:</p>
+
+        <!-- RGB Filter Demo -->
+        <p><strong>Figure 5</strong> - RGB color filter effects</p>
+        <div class="demo_container" id="lens_rgb_filter"></div>
+        <div class="slider_group">
+            <div id="lens_rgb_filter_sl0"></div>
+        </div>
+
+        <p>This is what an image looks like when captured with a Bayer filter:</p>
+
+        <!-- RGBG Detector Demo -->
+        <div class="demo_container" id="lens_detector_rgbg"></div>
+        <div class="slider_group">
+            <div id="lens_detector_rgbg_sl0"></div>
+        </div>
+
+        <p>As you can see, the resulting image is very pixelated and clearly shows the Bayer filter pattern. To get a clean image we need to perform a process called <em>demosaicing</em> that estimates the missing color information for each pixel based on the surrounding pixels. The result is a much smoother image:</p>
+
+        <!-- RGB Detector Demo -->
+        <div class="demo_container" id="lens_detector_rgb"></div>
+        <div class="slider_group">
+            <div id="lens_detector_rgb_sl0"></div>
+        </div>
+
+        <h2>2. Rays and Light on a Scene and Sensor</h2>
+
+        <p>The examples we have seen so far were very convenient, the sensors were surrounded by complete darkness with the photons neatly hitting the photodetectors to form a coherent image. Let's see how the sensor performs in more realistic scenarios. Let's assume this is a scene with multiple light sources and objects:</p>
+
+        <!-- Scene Demo -->
+        <div class="demo_container" id="lens_scene"></div>
+
+        <p>Let's try to see what sort of picture would be taken by a sensor that is placed near the objects without any enclosure:</p>
+
+        <!-- Bare Film Demo -->
+        <div class="demo_container" id="lens_bare_film"></div>
+
+        <p>This is not a mistake. As you can see, the obtained image doesn't really resemble anything. Every pixel of the sensor is exposed to the entire environment as illustrated in the figure below.</p>
+
+        <!-- Sensor Rays Demo -->
+        <div class="demo_container" id="lens_sensor_rays"></div>
+
+        <p>Furthermore, every point in an object emits light in all directions. The sensor only receives a small fraction of that light, and the amount of light received by each pixel depends on the angle of incidence and the distance from the object:</p>
+
+        <!-- Scene Rays Demo -->
+        <div class="demo_container" id="lens_scene_rays"></div>
+
+        <h2>3. Pinhole Camera</h2>
+
+        <p>We need to have a method to control the light hitting the sensor. Let's put the sensor in a box that has a small hole in it. The first slider controls the diameter of the hole, while the second one controls the distance between the opening and the sensor:</p>
+
+        <!-- Box Demo -->
+        <div class="demo_container" id="lens_box"></div>
+        <div class="slider_group">
+            <div id="lens_box_sl0"></div>
+            <div id="lens_box_sl1"></div>
+        </div>
+
+        <p>We've just built a <em>pinhole camera</em>! The image is inverted as the rays cross over in the hole and the formed image is a horizontal and a vertical reflection of the actual scene. This is illustrated in the following two figures.</p>
+
+        <!-- Film Demo -->
+        <div class="demo_container" id="lens_film"></div>
+        <div class="slider_group">
+            <div id="lens_film_sl0"></div>
+            <div id="lens_film_sl1"></div>
+        </div>
+
+        <!-- Film Invert Demo -->
+        <div class="demo_container" id="lens_film_invert"></div>
+
+        <p> We define the frustum of a camera as the volume of space that is visible to the camera. The frustum is defined by the field of view, the near and far clipping planes, and the aspect ratio of the image (or sensor).</p>
+
+        <!-- Frustum Demo -->
+        <div class="demo_container" id="lens_frustum"></div>
+        <div class="slider_group">
+            <div id="lens_frustum_sl0"></div>
+        </div>
+
+        <!-- Field Demo -->
+        <div class="demo_container" id="lens_field"></div>
+        <div class="slider_group">
+            <div id="lens_field_sl0"></div>
+        </div>
+
+        <p>In a pinhole camera, the sharpness of an image depends on the size of the hole. A smaller hole produces a sharper image but less light is able to pass through it.</p>
+
+        <!-- Hole Solid Angle Demo -->
+        <p><strong>Figure 15</strong> - Solid angle of pinhole</p>
+        <div class="demo_container" id="lens_hole_solid_angle"></div>
+        <div class="slider_group">
+            <div id="lens_hole_solid_angle_sl0"></div>
+        </div>
+
+        <p>The following figure shows what happens at the sensor level when the hole size is changed:</p>
+
+        <!-- Hole Sharpness Demo -->
+        <div class="demo_container" id="lens_hole_sharpness"></div>
+        <div class="slider_group">
+            <div id="lens_hole_sharpness_sl0"></div>
+        </div>
+
+        <p>Until now, we have used an ideal sensor that can capture as much light as needed. If we would use a less ideal sensor, it would be able to capture only a limited amount of light. As you can see, when the hole is too large the rays from a single point in the scene are able to hit multiple pixels on the sensor, which results in a blurry image. When the hole is too small, the rays from a single point are only able to hit a single pixel, which results in a sharper image but less light is able to reach the sensor, which results in a darker image. To increase the amount of light, we could have large exposure times. However, this will cause motion blur in dynamic scenes.</p>
+
+        <!-- Film Exposure Demo -->
+        <div class="demo_container" id="lens_film_exposure"></div>
+        <div class="slider_group">
+            <div id="lens_film_exposure_sl0"></div>
+            <div id="lens_film_exposure_sl1"></div>
+        </div>
+
+        <h2>4. Thin Lens Model</h2>
+
+        <p>To solve the problems of the pinhole camera, we need a device that could solve both of these problems: a way to collect a bigger part of the light radiated by the objects and also control the sharpness of parts of the image. For the objects in the scene that must be sharp we want to collect as much of their light as possible, and make it converge to the smallest possible point. This device would look something like this:</p>
+
+        <!-- Ideal Thin Lens Device Demo -->
+        <div class="demo_container" id="lens_device"></div>
+
+        <p>Then, if we place the sensor at this convergence point we will obtain a sharp image. The device that cameras use to achieve this is a lens. And the simplest lens that can achieve this is called a <em>thin lens</em>.</p>
+
+        <p>A thin lens is a piece of transparent material (e.g. glass) that has two spherical surfaces. It is an idealized lens, but it is commonly used to illustrate the principles of lens behavior. The following figure shows the geometry of a thin lens:</p>
+
+        <!-- Rotational Demo -->
+        <div class="demo_container" id="lens_rotational"></div>
+
+        <p>The convergence point of the rays is referred to as the <em>focal point</em>. You can see in the folloing figure how the focal point changes when the position of the origin of rays moves:</p>
+
+        <!-- Rotational Focal Demo -->
+        <div class="demo_container" id="lens_rotational_focal"></div>
+        <div class="slider_group">
+            <div id="lens_rotational_focal_sl0"></div>
+        </div>
+
+        <p>The main characteristic of a lens is its <em>focal length</em>. The focal length is the distance from the center of the lens to the focal point when the rays are parallel to the optical axis. Two parameters control the focal length: the curvature of the lens surfaces and the refractive index of the lens material:</p>
+
+        <!-- Lens Shape Demo -->
+        <div class="demo_container" id="lens_lens_shape"></div>
+        <div class="slider_group">
+            <div id="lens_lens_shape_sl0"></div>
+            <div id="lens_lens_shape_sl1"></div>
+        </div>
+
+        <h3>4.1 Focus and Bokeh</h3>
+
+        <p>When the sensor is placed at the focal point of the lens, the image is sharp. However, when the sensor is moved away from the focal point, the rays from a single point in the scene are no longer able to converge to a single point on the sensor, which results in a blurry image. The amount of blur depends on how far the sensor is from the focal point. The following figures shows how the field of view changes when we move the sensor to keep an image sharp at different focal lengths:</p>
+
+        <!-- Field2 Demo -->
+        <div class="demo_container" id="lens_field2"></div>
+        <div class="slider_group">
+            <div id="lens_field2_sl0"></div>
+            <div id="lens_field2_sl1"></div>
+        </div>
+
+        <!-- Lens Solid Angle Demo -->
+        <div class="demo_container" id="lens_lens_solid_angle"></div>
+        <div class="slider_group">
+            <div id="lens_lens_solid_angle_sl0"></div>
+            <div id="lens_lens_solid_angle_sl1"></div>
+        </div>
+
+        <p>When the sensor is not placed at the focal point, the rays from a single point in the scene are able to hit multiple pixels on the sensor, which results in a blurry image. This blur is called <em>bokeh</em>. The following figure shows how bokeh changes when we move the sensor away from the focal point:</p>
+
+        <!-- Focus Demo 2 -->
+        <div class="demo_container" id="lens_focus_demo2"></div>
+        <div class="slider_group">
+            <div id="lens_focus_demo2_sl0"></div>
+        </div>
+
+        <p>In the next figure, you can see how at a given focal length and sensor distance, an object might be more or less in focus depending on how far it is from the lens:</p>
+
+        <!-- Cone Slice Demo -->
+        <div class="demo_container" id="lens_cone_slice"></div>
+        <div class="slider_group">
+            <div id="lens_cone_slice_sl0"></div>
+        </div>
+
+        <h3>4.2 Aperture</h3>
+
+        <p>In cameras, there is another parameter that plays an important role on how much light is captured and how much of the scene is in focus. This parameter is called the <em>aperture</em>. The aperture is the opening in the lens that allows light to pass through. The size of the aperture affects both the amount of light that enters the camera and the so-called <em>depth of field</em>. Let's start by visualizing how the angle of the light of rays (light cone) can increase or reduce sharpness:</p>
+
+        <!-- Cone Angle Demo -->
+        <div class="demo_container" id="lens_cone_angle"></div>
+        <div class="slider_group">
+            <div id="lens_cone_angle_sl0"></div>
+        </div>
+
+        <p>The aperture is controlled by the diaphragm of the lens, which consists of a set of blades that can open and close to adjust the size of the aperture. The shape of the aperture is determined by the number and shape of the blades. The more blades there are, the more circular the aperture will be, which results in smoother bokeh. The shape of the aperture also defines the shape of bokeh. This is the reason why bokeh sometimes has a polygonal shape - it's simply the shape of the "cone" of light after passing through the blades of the aperture.</p>
+
+        <!-- Blades Demo -->
+        <div class="demo_container" id="lens_blades"></div>
+        <div class="slider_group">
+            <div id="lens_blades_sl0"></div>
+        </div>
+
+        <p>The aperture has an effect on the light cone angle. A smaller aperture results in a smaller light cone angle, which increases the depth of field. A larger depth of field means that more parts of the scene are in focus. Conversely, a larger aperture results in a larger light cone angle, which decreases the depth of field.</p>
+
+        <!-- Cone Hex Demo (Polygonal Bokeh) -->
+        <div class="demo_container" id="lens_cone_hex"></div>
+        <div class="slider_group">
+            <div id="lens_cone_hex_sl0"></div>
+        </div>
+
+        <p>The following figure allows you to play with the aperture to increase and decrease depth of field, and the sensor distance, to adjust the focus point:</p>
+
+        <!-- Focus Demo 3 -->
+        <div class="demo_container" id="lens_focus_demo3"></div>
+        <div class="slider_group">
+            <div id="lens_focus_demo3_sl0"></div>
+            <div id="lens_focus_demo3_sl1"></div>
+        </div>
+
+        <p>Notice how when the we change the focus point on the image by adjusting the sensor distance, the field of view changes. This effect is often referred to as <em>focus breathing</em>.</p>
+
+        <p>The following figure allows you to see the effect of aperture and focal length in the depth of field, and to see how the rays of an object inside and outside the focus distance are affected:</p>
+    
+        <!-- Cone DOF Demo -->
+        <div class="demo_container" id="lens_cone_dof"></div>
+        <div class="slider_group">
+            <div id="lens_cone_dof_sl0"></div>
+            <div id="lens_cone_dof_sl1"></div>
+            <div id="lens_cone_dof_sl2"></div>
+        </div>
+
+        <h2>5. Try It Yourself</h2>
+
+        <p>Now that you understand how a digital camera with a lens and an aperture diaphragm work together, try adjusting all three parameters in this interactive demonstration:</p>
+
+        <!-- Hero Demo -->
+        <div class="demo_container" id="lens_hero"></div>
+        <div class="slider_group">
+            <div id="lens_hero_sl0"></div>
+            <div id="lens_hero_sl1"></div>
+            <div id="lens_hero_sl2"></div>
+        </div>
+
+        <footer>
+            <p>Animations and ideas based on the original work by <a href="https://ciechanow.ski/cameras-and-lenses/">Bartosz Ciechanowski</a></p>
+        </footer>
+    </div>
+
+    <script src="js/base.js"></script>
+    <script src="js/lenses.js"></script>
+</body>
+</html>
