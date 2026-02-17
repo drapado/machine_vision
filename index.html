@@ -269,6 +269,103 @@
             <div id="lens_hero_sl2"></div>
         </div>
 
+        <h2>6. Camera model - From 3D to 2D</h2>
+
+        <p>Author: David Rapado-Rincon</p>
+        <p>Date: 14/05/2025</p>
+
+        <p>The following text summarizes the camera model explained on Tutorial A2 camera models. Each step builds upon the previous one by incorporating additional parameters or transformations.</p>
+
+        <p>The process of transforming a 3D world point to a 2D image point in a camera can be broken down into the following steps:</p>
+        <ol>
+            <li><strong>Transforming X̃<sub>world</sub> to the camera coordinate system.</strong> The result is X̃<sub>cam</sub>.</li>
+            <li><strong>Performing an ideal projection from 3D to 2D (sensor plane).</strong></li>
+            <li><strong>Transforming the 2D point from the sensor plane to the image plane.</strong> This involves accounting for the principal point offset and pixel dimensions.</li>
+            <li><strong>Distortions and deviation from the ideal linear model.</strong> This step addresses lens distortions and other non-linearities.</li>
+        </ol>
+
+        <h3>6.1 Step 2 - Ideal projection from 3D to 2D</h3>
+
+        <p>This step models how a 3D world (with respect to the camera) is projected onto a 2D image under ideal conditions.</p>
+
+        <ul>
+            <li><strong>Conceptual setup</strong>: The camera center (center of projection) is at (0,0,0), and the image plane is defined by Z = f.</li>
+            <li><strong>Projection mechanism</strong>: A 3D point X = (X,Y,Z)<sup>T</sup> maps to the intersection between the image plane and the line from X to the camera center.</li>
+            <li><strong>Geometric derivation</strong>: Using similar triangles, the projected point is (fX/Z, fY/Z).</li>
+        </ul>
+
+        <div class="equation"><strong>(1)</strong> (X,Y,Z)<sup>T</sup> ↦ (fX/Z, fY/Z)<sup>T</sup></div>
+
+        <p><strong>Interactive Figure</strong> - Ideal projection geometry (3D/plane view)</p>
+        <div class="demo_container" id="cam_model_step2"></div>
+        <div class="slider_group">
+            <div id="cam_model_step2_sl0" data-label="Focal length"></div>
+            <div id="cam_model_step2_sl1" data-label="Point X"></div>
+            <div id="cam_model_step2_sl2" data-label="Point Y"></div>
+            <div id="cam_model_step2_sl3" data-label="Point Z"></div>
+            <div id="cam_model_step2_planes"></div>
+        </div>
+
+        <p><strong>Original geometric diagram</strong></p>
+        <p><img src="assets/step_2.png" alt="Step 2 projection geometry" class="content_figure"></p>
+
+        <h4>6.1.1 Using homogeneous coordinates</h4>
+
+        <p>Homogeneous coordinates allow the non-linear projection mapping to be expressed as linear matrix multiplication.</p>
+        <div class="equation"><strong>(2)</strong> (X,Y,Z,1)<sup>T</sup> ↦ (fX,fY,Z)<sup>T</sup> = P(X,Y,Z,1)<sup>T</sup></div>
+        <div class="equation"><strong>(3)</strong> P = diag(f,f,1)[I|0] = [f 0 0 0; 0 f 0 0; 0 0 1 0]</div>
+
+        <h3>6.2 Step 3 - From sensor to camera (Principal point offset)</h3>
+
+        <p>The origin of the image plane coordinate system does not necessarily coincide with the principal point. Let (p<sub>x</sub>, p<sub>y</sub>)<sup>T</sup> be the principal point in image coordinates.</p>
+
+        <div class="equation"><strong>(4)</strong> (X,Y,Z)<sup>T</sup> ↦ (fX/Z + p<sub>x</sub>, fY/Z + p<sub>y</sub>)<sup>T</sup></div>
+        <div class="equation"><strong>(5)</strong> (X,Y,Z,1)<sup>T</sup> ↦ (fX + Zp<sub>x</sub>, fY + Zp<sub>y</sub>, Z)<sup>T</sup></div>
+        <div class="equation"><strong>(6)</strong> K = [f 0 p<sub>x</sub>; 0 f p<sub>y</sub>; 0 0 1]</div>
+        <div class="equation"><strong>(7)</strong> x = K[I|0]X<sub>cam</sub></div>
+
+        <p><strong>Original geometric diagram</strong></p>
+        <p><img src="assets/step_3.png" alt="Step 3 principal point offset" class="content_figure"></p>
+
+        <h3>6.3 Step 1 - Camera rotation and translation with respect to the world</h3>
+
+        <p>In most scenarios, 3D points are expressed in a world frame distinct from the camera frame. A rigid transformation (rotation and translation) relates both frames.</p>
+
+        <div class="equation"><strong>(8)</strong> X̃<sub>cam</sub> = R(X̃ − C̃)</div>
+        <div class="equation"><strong>(9)</strong> X<sub>cam</sub> = [R −RC̃; 0<sup>T</sup> 1]X</div>
+        <div class="equation"><strong>(10)</strong> x = KR[I|−C̃]X</div>
+        <div class="equation"><strong>(11)</strong> P = K[R|t], with t = −RC̃</div>
+
+        <p><strong>Interactive Figure</strong> - Extrinsics and full projection (3D)</p>
+        <div class="demo_container" id="cam_model_step1"></div>
+        <div class="slider_group">
+            <div id="cam_model_step1_sl0" data-label="Camera Cx"></div>
+            <div id="cam_model_step1_sl1" data-label="Camera Cy"></div>
+            <div id="cam_model_step1_sl2" data-label="Camera Cz"></div>
+            <div id="cam_model_step1_sl3" data-label="Yaw"></div>
+            <div id="cam_model_step1_sl4" data-label="Pitch"></div>
+            <div id="cam_model_step1_sl5" data-label="Roll"></div>
+            <div id="cam_model_step1_planes"></div>
+        </div>
+
+        <p><strong>Original geometric diagram</strong></p>
+        <p><img src="assets/step_1.png" alt="Step 1 extrinsics geometry" class="content_figure"></p>
+
+        <h3>6.4 Digital sensors - pixel space</h3>
+
+        <p>Digital cameras introduce additional calibration effects, such as non-square pixels and image coordinates measured in pixels instead of metric units.</p>
+
+        <p>If m<sub>x</sub> and m<sub>y</sub> are the pixel densities in x and y, the calibration matrix becomes:</p>
+
+        <div class="equation"><strong>(12)</strong> K = [f<sub>x</sub> 0 x<sub>0</sub>; 0 f<sub>y</sub> y<sub>0</sub>; 0 0 1]</div>
+
+        <p>Where f<sub>x</sub> = f·m<sub>x</sub>, f<sub>y</sub> = f·m<sub>y</sub>, x<sub>0</sub> = p<sub>x</sub>·m<sub>x</sub>, y<sub>0</sub> = p<sub>y</sub>·m<sub>y</sub>.</p>
+
+        <p>The pixel-space calibration matrix extends the same geometry into pixel units and preserves the same projection structure.</p>
+
+        <h3>6.5 References</h3>
+        <p>Hartley, R., &amp; Zisserman, A. (2004). Chapter 6. In <em>Multiple View Geometry in Computer Vision</em> (2nd ed., pp. 153-158). Cambridge University Press.</p>
+
         <footer>
             <p>Animations and ideas based on the original work by <a href="https://ciechanow.ski/cameras-and-lenses/">Bartosz Ciechanowski</a></p>
         </footer>
@@ -276,5 +373,6 @@
 
     <script src="js/base.js"></script>
     <script src="js/lenses.js"></script>
+    <script src="js/camera_model.js"></script>
 </body>
 </html>
