@@ -8,6 +8,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['\\(', '\\)']],
+                displayMath: [['\\[', '\\]']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 </head>
 <body>
     <div class="container">
@@ -294,7 +306,7 @@
             <li><strong>Geometric derivation</strong>: Using similar triangles, the projected point is (fX/Z, fY/Z).</li>
         </ul>
 
-        <div class="equation"><strong>(1)</strong> (X,Y,Z)<sup>T</sup> ↦ (fX/Z, fY/Z)<sup>T</sup></div>
+        <div class="equation"><strong>(1)</strong> \[\begin{bmatrix}X \\ Y \\ Z\end{bmatrix} \mapsto \begin{bmatrix}\frac{fX}{Z} \\ \frac{fY}{Z}\end{bmatrix}\]</div>
 
         <p><strong>Interactive Figure</strong> - Ideal projection geometry (3D/plane view)</p>
         <div class="demo_container" id="cam_model_step2"></div>
@@ -312,17 +324,17 @@
         <h4>6.1.1 Using homogeneous coordinates</h4>
 
         <p>Homogeneous coordinates allow the non-linear projection mapping to be expressed as linear matrix multiplication.</p>
-        <div class="equation"><strong>(2)</strong> (X,Y,Z,1)<sup>T</sup> ↦ (fX,fY,Z)<sup>T</sup> = P(X,Y,Z,1)<sup>T</sup></div>
-        <div class="equation"><strong>(3)</strong> P = diag(f,f,1)[I|0] = [f 0 0 0; 0 f 0 0; 0 0 1 0]</div>
+        <div class="equation"><strong>(2)</strong> \[\begin{bmatrix}X \\ Y \\ Z \\ 1\end{bmatrix} \mapsto \begin{bmatrix}fX \\ fY \\ Z\end{bmatrix} = P\begin{bmatrix}X \\ Y \\ Z \\ 1\end{bmatrix}\]</div>
+        <div class="equation"><strong>(3)</strong> \[P = \operatorname{diag}(f,f,1)[I\mid 0] = \begin{bmatrix}f & 0 & 0 & 0 \\ 0 & f & 0 & 0 \\ 0 & 0 & 1 & 0\end{bmatrix}\]</div>
 
         <h3>6.2 Step 3 - From sensor to camera (Principal point offset)</h3>
 
         <p>The origin of the image plane coordinate system does not necessarily coincide with the principal point. Let (p<sub>x</sub>, p<sub>y</sub>)<sup>T</sup> be the principal point in image coordinates.</p>
 
-        <div class="equation"><strong>(4)</strong> (X,Y,Z)<sup>T</sup> ↦ (fX/Z + p<sub>x</sub>, fY/Z + p<sub>y</sub>)<sup>T</sup></div>
-        <div class="equation"><strong>(5)</strong> (X,Y,Z,1)<sup>T</sup> ↦ (fX + Zp<sub>x</sub>, fY + Zp<sub>y</sub>, Z)<sup>T</sup></div>
-        <div class="equation"><strong>(6)</strong> K = [f 0 p<sub>x</sub>; 0 f p<sub>y</sub>; 0 0 1]</div>
-        <div class="equation"><strong>(7)</strong> x = K[I|0]X<sub>cam</sub></div>
+        <div class="equation"><strong>(4)</strong> \[\begin{bmatrix}X \\ Y \\ Z\end{bmatrix} \mapsto \begin{bmatrix}\frac{fX}{Z} + p_x \\ \frac{fY}{Z} + p_y\end{bmatrix}\]</div>
+        <div class="equation"><strong>(5)</strong> \[\begin{bmatrix}X \\ Y \\ Z \\ 1\end{bmatrix} \mapsto \begin{bmatrix}fX + Zp_x \\ fY + Zp_y \\ Z\end{bmatrix}\]</div>
+        <div class="equation"><strong>(6)</strong> \[K = \begin{bmatrix}f & 0 & p_x \\ 0 & f & p_y \\ 0 & 0 & 1\end{bmatrix}\]</div>
+        <div class="equation"><strong>(7)</strong> \[x = K[I\mid 0]X_{\mathrm{cam}}\]</div>
 
         <p><strong>Original geometric diagram</strong></p>
         <p><img src="assets/step_3.png" alt="Step 3 principal point offset" class="content_figure"></p>
@@ -331,10 +343,10 @@
 
         <p>In most scenarios, 3D points are expressed in a world frame distinct from the camera frame. A rigid transformation (rotation and translation) relates both frames.</p>
 
-        <div class="equation"><strong>(8)</strong> X̃<sub>cam</sub> = R(X̃ − C̃)</div>
-        <div class="equation"><strong>(9)</strong> X<sub>cam</sub> = [R −RC̃; 0<sup>T</sup> 1]X</div>
-        <div class="equation"><strong>(10)</strong> x = KR[I|−C̃]X</div>
-        <div class="equation"><strong>(11)</strong> P = K[R|t], with t = −RC̃</div>
+        <div class="equation"><strong>(8)</strong> \[\tilde{X}_{\mathrm{cam}} = R(\tilde{X} - \tilde{C})\]</div>
+        <div class="equation"><strong>(9)</strong> \[X_{\mathrm{cam}} = \begin{bmatrix}R & -R\tilde{C} \\ 0^T & 1\end{bmatrix}X\]</div>
+        <div class="equation"><strong>(10)</strong> \[x = KR[I\mid -\tilde{C}]X\]</div>
+        <div class="equation"><strong>(11)</strong> \[P = K[R\mid t],\quad t = -R\tilde{C}\]</div>
 
         <p><strong>Interactive Figure</strong> - Extrinsics and full projection (3D)</p>
         <div class="demo_container" id="cam_model_step1"></div>
@@ -357,7 +369,7 @@
 
         <p>If m<sub>x</sub> and m<sub>y</sub> are the pixel densities in x and y, the calibration matrix becomes:</p>
 
-        <div class="equation"><strong>(12)</strong> K = [f<sub>x</sub> 0 x<sub>0</sub>; 0 f<sub>y</sub> y<sub>0</sub>; 0 0 1]</div>
+        <div class="equation"><strong>(12)</strong> \[K = \begin{bmatrix}f_x & 0 & x_0 \\ 0 & f_y & y_0 \\ 0 & 0 & 1\end{bmatrix}\]</div>
 
         <p>Where f<sub>x</sub> = f·m<sub>x</sub>, f<sub>y</sub> = f·m<sub>y</sub>, x<sub>0</sub> = p<sub>x</sub>·m<sub>x</sub>, y<sub>0</sub> = p<sub>y</sub>·m<sub>y</sub>.</p>
 

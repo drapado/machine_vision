@@ -345,11 +345,25 @@ th {
 .equation {
     text-align: center;
     margin: 1.5em 0;
-    font-style: italic;
+    font-style: normal;
+    position: relative;
+    padding-right: 4.5em;
 }
 
 .equation var {
     font-style: italic;
+}
+
+.equation mjx-container {
+    margin: 0.35em 0;
+}
+
+.equation > strong {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-weight: 600;
 }
 
 /* Lists */
@@ -364,8 +378,9 @@ li {
 
 .content_figure {
     display: block;
-    width: 100%;
-    max-width: 760px;
+    width: min(100%, 640px);
+    max-width: 100%;
+    height: auto;
     margin: 0 auto;
     border-radius: var(--border-radius);
 }

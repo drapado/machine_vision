@@ -43,10 +43,11 @@
         return rotZ(rotX(rotY(p, yaw), pitch), roll);
     }
 
-    function worldToScreen(point, width, height, yaw, pitch) {
+    function worldToScreen(point, width, height, yaw, pitch, zoom) {
         let p = rotateWorldToView(point, yaw, pitch);
         let depth = p[2] + 7.0;
-        let scale = Math.min(width, height) * 0.65 / depth;
+        let zoomFactor = zoom === undefined ? 1.0 : zoom;
+        let scale = Math.min(width, height) * 0.65 * zoomFactor / depth;
         return [width * 0.5 + p[0] * scale, height * 0.56 - p[1] * scale, depth];
     }
 
@@ -114,12 +115,12 @@
         return [yaw, pitch];
     }
 
-    function makeViewProjector(width, height, mode, yaw, pitch, fitPoints) {
+    function makeViewProjector(width, height, mode, yaw, pitch, fitPoints, zoom) {
         let va = getPlaneViewAngles(mode, yaw, pitch);
 
         if (mode === 0) {
             return function (p) {
-                return worldToScreen(p, width, height, va[0], va[1]);
+                return worldToScreen(p, width, height, va[0], va[1], zoom);
             };
         }
 
@@ -162,7 +163,7 @@
         };
     }
 
-    function makeCanvasDemo(containerId, drawCallback, dragCallback) {
+    function makeCanvasDemo(containerId, drawCallback, dragCallback, wheelCallback) {
         let container = byId(containerId);
         if (!container) {
             return null;
@@ -202,6 +203,16 @@
             });
         }
 
+        if (wheelCallback) {
+            wrapper.addEventListener("wheel", function (e) {
+                let handled = wheelCallback(e.deltaY);
+                if (handled) {
+                    e.preventDefault();
+                    repaint();
+                }
+            }, { passive: false });
+        }
+
         window.addEventListener("resize", repaint, true);
         window.addEventListener("load", repaint, true);
 
@@ -232,7 +243,7 @@
             [0, 1.4, 0],
             [0, 0, 1.4]
         ]);
-        let view = makeViewProjector(width, height, state.planeMode, state.yaw, state.pitch, fitPoints);
+        let view = makeViewProjector(width, height, state.planeMode, state.yaw, state.pitch, fitPoints, state.viewZoom);
 
         function drawSelectedPlane(center, size) {
             if (state.planeMode === 0) {
@@ -267,7 +278,7 @@
                 [center[0] + size, center[1], center[2] + size],
                 [center[0] - size, center[1], center[2] + size]
             ].map(view);
-            drawPolygon(ctx, planeXZ, "rgba(65,141,226,0.45)", "rgba(65,141,226,0.10)");
+            drawPolygon(ctx, planeXZ, "rgba(245,166,35,0.55)", "rgba(245,166,35,0.14)");
         }
 
         drawSelectedPlane([0, 0, 0], 1.3);
@@ -306,6 +317,8 @@
             drawLabel(ctx, "YZ plane view", 16, 24, "#333");
         } else if (state.planeMode === 3) {
             drawLabel(ctx, "XZ plane view", 16, 24, "#333");
+        } else {
+            drawLabel(ctx, "3D view (mouse wheel to zoom)", 16, 24, "#333");
         }
     }
 
@@ -317,7 +330,8 @@
             pointZ: 2.6,
             yaw: -0.6,
             pitch: 0.45,
-            planeMode: 0
+            planeMode: 0,
+            viewZoom: 1.0
         };
 
         let demo = makeCanvasDemo("cam_model_step2", function (ctx, width, height) {
@@ -328,6 +342,13 @@
             }
             state.yaw += dx * 0.006;
             state.pitch = clamp(state.pitch + dy * 0.006, -1.2, 1.2);
+        }, function (deltaY) {
+            if (state.planeMode !== 0) {
+                return false;
+            }
+            let factor = deltaY < 0 ? 1.08 : 0.92;
+            state.viewZoom = clamp(state.viewZoom * factor, 0.55, 2.8);
+            return true;
         });
 
         let slF = byId("cam_model_step2_sl0");
@@ -407,12 +428,17 @@
         ];
 
         let axisScale = 0.75;
+        let worldAxisScale = 1.05;
         let fitPoints = [C, Xw, qWorld, planeCenter].concat(corners, [
+            [0, 0, 0],
+            [worldAxisScale, 0, 0],
+            [0, worldAxisScale, 0],
+            [0, 0, worldAxisScale],
             add3(C, scale3(right, axisScale)),
             add3(C, scale3(up, axisScale)),
             add3(C, scale3(forward, axisScale))
         ]);
-        let view = makeViewProjector(width, height, state.planeMode, state.sceneYaw, state.scenePitch, fitPoints);
+        let view = makeViewProjector(width, height, state.planeMode, state.sceneYaw, state.scenePitch, fitPoints, state.viewZoom);
 
         let c2 = view(C);
         let x2 = view(Xw);
@@ -453,7 +479,7 @@
                 add3(add3(center, scale3(axisRight, size)), scale3(axisForward, size)),
                 add3(add3(center, scale3(axisRight, -size)), scale3(axisForward, size))
             ].map(view);
-            drawPolygon(ctx, xz, "rgba(65,141,226,0.45)", "rgba(65,141,226,0.10)");
+            drawPolygon(ctx, xz, "rgba(245,166,35,0.55)", "rgba(245,166,35,0.14)");
         }
 
         drawSelectedLocalPlane(C, right, up, forward, 0.9);
@@ -473,6 +499,17 @@
         let ry = view(add3(C, scale3(up, axisScale)));
         let rz = view(add3(C, scale3(forward, axisScale)));
 
+        let worldOrigin = [0, 0, 0];
+        let worldOrigin2 = view(worldOrigin);
+        let worldX2 = view([worldAxisScale, 0, 0]);
+        let worldY2 = view([0, worldAxisScale, 0]);
+        let worldZ2 = view([0, 0, worldAxisScale]);
+
+        drawLine2D(ctx, worldOrigin2, worldX2, "rgba(236,81,81,0.55)", 1.4);
+        drawLine2D(ctx, worldOrigin2, worldY2, "rgba(85,196,50,0.55)", 1.4);
+        drawLine2D(ctx, worldOrigin2, worldZ2, "rgba(65,141,226,0.55)", 1.4);
+        drawPoint2D(ctx, worldOrigin2, "#666", 3.6);
+
         drawLine2D(ctx, c2, rx, "#EC5151", 1.7);
         drawLine2D(ctx, c2, ry, "#55C432", 1.7);
         drawLine2D(ctx, c2, rz, "#418DE2", 1.7);
@@ -481,6 +518,7 @@
         drawLabel(ctx, "World point X", x2[0] + 8, x2[1] - 8, "#C44732");
         drawLabel(ctx, "Projected x", q2[0] + 8, q2[1] - 8, "#1E6FA8");
         drawLabel(ctx, "Image plane", corner2[0][0] + 8, corner2[0][1] - 10, "#1E6FA8");
+        drawLabel(ctx, "World origin O_w", worldOrigin2[0] + 8, worldOrigin2[1] + 14, "#555");
 
         if (state.planeMode === 1) {
             drawLabel(ctx, "Camera XY plane view", 16, 24, "#333");
@@ -488,6 +526,8 @@
             drawLabel(ctx, "Camera YZ plane view", 16, 24, "#333");
         } else if (state.planeMode === 3) {
             drawLabel(ctx, "Camera XZ plane view", 16, 24, "#333");
+        } else {
+            drawLabel(ctx, "3D view (mouse wheel to zoom)", 16, 24, "#333");
         }
     }
 
@@ -501,7 +541,8 @@
             camRoll: -0.05,
             sceneYaw: -0.55,
             scenePitch: 0.35,
-            planeMode: 0
+            planeMode: 0,
+            viewZoom: 1.0
         };
 
         let demo = makeCanvasDemo("cam_model_step1", function (ctx, width, height) {
@@ -512,6 +553,13 @@
             }
             state.sceneYaw += dx * 0.006;
             state.scenePitch = clamp(state.scenePitch + dy * 0.006, -1.2, 1.2);
+        }, function (deltaY) {
+            if (state.planeMode !== 0) {
+                return false;
+            }
+            let factor = deltaY < 0 ? 1.08 : 0.92;
+            state.viewZoom = clamp(state.viewZoom * factor, 0.55, 2.8);
+            return true;
         });
 
         let sl0 = byId("cam_model_step1_sl0");
