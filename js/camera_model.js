@@ -102,6 +102,10 @@
         return [v[0] * s, v[1] * s, v[2] * s];
     }
 
+    function dot3(a, b) {
+        return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    }
+
     function getPlaneViewAngles(mode, yaw, pitch) {
         if (mode === 1) {
             return [0, 0];
@@ -402,19 +406,15 @@
             return rotateEuler(v, yaw, pitch, roll);
         }
 
-        function RTwc(v) {
-            return rotateEuler(v, -yaw, -pitch, -roll);
-        }
-
-        let Xcam = RTwc([Xw[0] - C[0], Xw[1] - C[1], Xw[2] - C[2]]);
-        let zCam = Math.max(0.35, Xcam[2]);
-        let qCam = [f * Xcam[0] / zCam, f * Xcam[1] / zCam, f];
-        let qWorldLocal = Rwc(qCam);
-        let qWorld = [C[0] + qWorldLocal[0], C[1] + qWorldLocal[1], C[2] + qWorldLocal[2]];
-
         let forward = Rwc([0, 0, 1]);
         let right = Rwc([1, 0, 0]);
         let up = Rwc([0, 1, 0]);
+
+        let dWorld = [Xw[0] - C[0], Xw[1] - C[1], Xw[2] - C[2]];
+        let Xcam = [dot3(dWorld, right), dot3(dWorld, up), dot3(dWorld, forward)];
+        let zCam = Math.max(0.35, Xcam[2]);
+        let qCam = [f * Xcam[0] / zCam, f * Xcam[1] / zCam, f];
+        let qWorld = add3(add3(add3(C, scale3(right, qCam[0])), scale3(up, qCam[1])), scale3(forward, qCam[2]));
 
         let planeCenter = [C[0] + forward[0] * f, C[1] + forward[1] * f, C[2] + forward[2] * f];
         let hw = 1.1;
