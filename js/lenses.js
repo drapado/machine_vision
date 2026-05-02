@@ -3628,7 +3628,7 @@ let wave_glass2_slider1;
 
                 let ap_r = 0
 
-                let r = lerp(r_max, r_min, arg0);
+                let r = lerp(r_min, r_max, arg0);
                 let lens_r = 0.0;
 
                 if (mode === "box_lens") {
@@ -3638,7 +3638,7 @@ let wave_glass2_slider1;
                     color_lens = false;
                     r = 0.2;
                     lens_r = 0.7;
-                    ap_r = lerp(0.19, 0.005, arg0);
+                    ap_r = lerp(0.005, 0.19, arg0);
                 }
 
                 let hd = lerp(hd_min, hd_max, arg1);
@@ -3743,7 +3743,7 @@ let wave_glass2_slider1;
                 let exposure = mode === "film_exposure";
 
 
-                let r = lerp(r_max, r_min, arg0);
+                let r = lerp(r_min, r_max, arg0);
                 let hd = lerp(hd_min, hd_max, arg1);
 
                 let fill = 1.0;
@@ -3837,7 +3837,7 @@ let wave_glass2_slider1;
                     f = 0.35;
                     hd = 0.35 + 0.1 * arg1;
                     camera_lens_r = 0.5;
-                    aperture = lerp(0.19, 0.005, arg0);
+                    aperture = lerp(0.005, 0.19, arg0);
                     camera_ap_r = aperture;
                     color_lens = false;
                     color_aperture = true;
@@ -3845,7 +3845,7 @@ let wave_glass2_slider1;
                     f = 0.32 + 0.1 * arg1;
                     hd = 0.35 + 0.1 * arg2;
                     camera_lens_r = lerp(0.45, 0.55, arg1);
-                    aperture = lerp(0.15, 0.005, arg0);
+                    aperture = lerp(0.005, 0.15, arg0);
                     camera_ap_r = aperture;
                     color_lens = true;
                     color_aperture = true;
@@ -4337,7 +4337,7 @@ let wave_glass2_slider1;
 
             } else if (mode === "hole_solid_angle") {
 
-                let r = 0.001 + (1.0 - arg0) * 0.07;
+                let r = 0.001 + arg0 * 0.07;
                 let hd = 0.5;
 
                 gl.begin(width, height);
@@ -6539,7 +6539,7 @@ let wave_glass2_slider1;
 
                 ctx.translate(Math.round(width * 0.5), Math.round(height * 0.5));
 
-                let r = 1.0 * (1.0 - arg0 * 0.75);
+                let r = 0.25 + arg0 * 0.75;
                 let im_r = 0.5 * r;
 
                 let proj = mat3_mul(proj_rot, scale_mat3(1.6));
@@ -6708,7 +6708,7 @@ let wave_glass2_slider1;
             }  else if (mode === "cone_aperture" || mode === "cone_dof" || mode === "cone_hex") {
                 ctx.translate(Math.round(width * 0.5), Math.round(height * 0.5));
 
-                let ap = lerp(0.5, 0.05, arg0);
+                let ap = lerp(0.05, 0.5, arg0);
                 let r = 1.0;
                 let R = 2.0;
                 let n = 1.5;
@@ -6724,7 +6724,7 @@ let wave_glass2_slider1;
 
                 let f = 1 / (1 / 2.0 + 1 / 4.0);
                 if (mode === "cone_dof") {
-                    ap = lerp(0.34, 0.2, arg0);
+                    ap = lerp(0.2, 0.34, arg0);
                     source_d = lerp(5.5, 1.5, arg2);
                     im_z = 3.0;
                     ap_z = 2.0;
